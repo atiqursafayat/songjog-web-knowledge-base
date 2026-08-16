@@ -10,7 +10,7 @@
   },
   "favicon": "/favicon.svg",
   "navigation": {
-    "groups": [
+    "pages": [
       {
         "group": "Overview",
         "pages": [
@@ -115,7 +115,8 @@
         "pages": [
           "source-materials/website-content-architecture-source"
         ]
-      }
+      },
+      "index"
     ]
   },
   "footer": {

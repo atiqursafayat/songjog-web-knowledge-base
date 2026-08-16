@@ -1,0 +1,72 @@
+---
+title: "Structured Handoff Specification"
+description: "Contract between the writer agent, human reviewer, Gemini Spark, and MCP integration"
+---
+
+> Contract between the writer agent, human reviewer, Gemini Spark, and MCP integration
+
+<Note>
+**Document control**
+
+- **Document status:** DRAFT - REVIEW REQUIRED
+- **Knowledge use:** AUTHORITATIVE AFTER APPROVAL
+- **Responsible entity:** Songjog Foundation USA website
+- **Content owner:** Communications and Web Team
+- **Effective date:** 2026-08-16
+- **Review date:** 2027-02-16
+- **Version:** 1.0
+</Note>
+
+## Required top-level fields
+
+- schema_version
+
+- request_id
+
+- status
+
+- ready_for_mcp
+
+- entity
+
+- classification
+
+- content
+
+- taxonomies
+
+- relationships
+
+- seo
+
+- media_plan
+
+- related_quotes
+
+- source_traceability
+
+- quality_checks
+
+- missing_information
+
+- publication_blockers
+
+- recommended_next_action
+
+## Readiness rule
+
+ready_for_mcp must be false whenever entity, consent, privacy, required facts, required fields, or controlled taxonomy values remain unresolved.
+
+## Content status
+
+post_status must remain draft in routine agent output.
+
+## Source traceability
+
+Record source file and page, section, table, or user-provided clarification for dates, numbers, quotes, partners, outcomes, legal statements, financial statements, and emergency information.
+
+## Included files
+
+- songjog-content-handoff.schema.json
+
+- songjog-content-handoff.example.json

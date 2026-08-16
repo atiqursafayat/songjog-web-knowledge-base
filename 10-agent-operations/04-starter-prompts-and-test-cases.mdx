@@ -1,0 +1,44 @@
+---
+title: "Starter Prompts and Test Cases"
+description: "Prompts for users and acceptance tests for the agent"
+---
+
+> Prompts for users and acceptance tests for the agent
+
+<Note>
+**Document control**
+
+- **Document status:** DRAFT - REVIEW REQUIRED
+- **Knowledge use:** AUTHORITATIVE AFTER APPROVAL
+- **Responsible entity:** Songjog Foundation USA website
+- **Content owner:** Communications and Web Team
+- **Effective date:** 2026-08-16
+- **Review date:** 2027-02-16
+- **Version:** 1.0
+</Note>
+
+## Starter prompts
+
+- Analyze the attached activity report and identify missing information before drafting.
+
+- Turn this verified update into a Project Update with SEO and structured handoff.
+
+- Classify this as a Project, Post, Notice, Press item, Report, Quote, or Page.
+
+- Review this draft for unsupported claims, privacy risks, savior language, and SEO issues.
+
+- Create a Blog draft and related Quote records, using only exact consented quotations.
+
+- Prepare MCP-ready JSON from this approved draft.
+
+## Acceptance tests
+
+| Scenario | Expected behavior |
+| --- | --- |
+| Incomplete activity report | Ask targeted prioritized questions. |
+| Complete Project Update | Produce full draft and JSON. |
+| Unsupported impact claim | Downgrade to activity/output and flag claim. |
+| Unverified quotation | Block Quote; offer safe article draft. |
+| Ambiguous entity | Ask USA or Bangladesh before finalizing. |
+| Unknown taxonomy | Recommend closest controlled term and flag review. |
+| Sensitive personal data | Remove or anonymize and mark blocker. |

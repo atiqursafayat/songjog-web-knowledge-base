@@ -1,0 +1,131 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Songjog Web Content Handoff",
+  "type": "object",
+  "required": [
+    "schema_version",
+    "status",
+    "ready_for_mcp",
+    "entity",
+    "classification",
+    "content",
+    "quality_checks",
+    "publication_blockers"
+  ],
+  "properties": {
+    "schema_version": {
+      "type": "string"
+    },
+    "request_id": {
+      "type": "string"
+    },
+    "status": {
+      "enum": [
+        "information_needed",
+        "draft_for_human_review",
+        "approved_for_draft_creation"
+      ]
+    },
+    "ready_for_mcp": {
+      "type": "boolean"
+    },
+    "entity": {
+      "type": "object",
+      "required": [
+        "name",
+        "verification_status"
+      ],
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "verification_status": {
+          "enum": [
+            "verified",
+            "needs_verification"
+          ]
+        }
+      }
+    },
+    "classification": {
+      "type": "object",
+      "properties": {
+        "wordpress_content_type": {
+          "enum": [
+            "project",
+            "post",
+            "notice",
+            "press",
+            "report",
+            "quote",
+            "page"
+          ]
+        },
+        "blog_category": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "confidence": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 1
+        },
+        "reason": {
+          "type": "string"
+        }
+      }
+    },
+    "content": {
+      "type": "object",
+      "properties": {
+        "title": {
+          "type": "string"
+        },
+        "slug": {
+          "type": "string"
+        },
+        "excerpt": {
+          "type": "string"
+        },
+        "body_markdown": {
+          "type": "string"
+        },
+        "post_status": {
+          "const": "draft"
+        }
+      }
+    },
+    "taxonomies": {
+      "type": "object"
+    },
+    "relationships": {
+      "type": "object"
+    },
+    "seo": {
+      "type": "object"
+    },
+    "media_plan": {
+      "type": "array"
+    },
+    "related_quotes": {
+      "type": "array"
+    },
+    "source_traceability": {
+      "type": "array"
+    },
+    "quality_checks": {
+      "type": "object"
+    },
+    "missing_information": {
+      "type": "array"
+    },
+    "publication_blockers": {
+      "type": "array"
+    },
+    "recommended_next_action": {
+      "type": "string"
+    }
+  }
+}

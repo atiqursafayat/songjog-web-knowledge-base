@@ -1,0 +1,55 @@
+{
+  "schema_version": "1.0",
+  "request_id": "REQ-EXAMPLE",
+  "status": "information_needed",
+  "ready_for_mcp": false,
+  "entity": {
+    "name": "",
+    "verification_status": "needs_verification"
+  },
+  "classification": {
+    "wordpress_content_type": "post",
+    "blog_category": "Project Updates",
+    "confidence": 0.7,
+    "reason": "Source appears to describe progress within an existing project."
+  },
+  "content": {
+    "title": "",
+    "slug": "",
+    "excerpt": "",
+    "body_markdown": "",
+    "post_status": "draft"
+  },
+  "taxonomies": {
+    "focus_areas": [],
+    "categories": [
+      "Project Updates"
+    ],
+    "tags": []
+  },
+  "relationships": {
+    "related_project": {
+      "name": "",
+      "wordpress_id": null,
+      "matching_status": "needs_matching"
+    }
+  },
+  "seo": {},
+  "media_plan": [],
+  "related_quotes": [],
+  "source_traceability": [],
+  "quality_checks": {
+    "responsible_entity_verified": false,
+    "facts_supported": false,
+    "quote_consent_verified": false,
+    "privacy_review_passed": false,
+    "seo_complete": false
+  },
+  "missing_information": [
+    "Confirm responsible entity."
+  ],
+  "publication_blockers": [
+    "Responsible entity is not verified."
+  ],
+  "recommended_next_action": "request_information"
+}

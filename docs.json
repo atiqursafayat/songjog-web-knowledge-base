@@ -1,0 +1,132 @@
+{
+  "$schema": "https://mintlify.com/docs.json",
+  "theme": "mint",
+  "name": "Songjog Web Knowledge Base",
+  "description": "Governed knowledge for the Songjog Website Content Planner agent.",
+  "colors": {
+    "primary": "#006B49",
+    "light": "#00AE75",
+    "dark": "#10172E"
+  },
+  "favicon": "/favicon.svg",
+  "navigation": {
+    "groups": [
+      {
+        "group": "Overview",
+        "pages": [
+          "index"
+        ]
+      },
+      {
+        "group": "Start Here",
+        "pages": [
+          "00-start-here/00-knowledge-base-index",
+          "00-start-here/01-knowledge-governance-and-approval"
+        ]
+      },
+      {
+        "group": "Website Architecture",
+        "pages": [
+          "01-website-architecture/01-content-type-decision-guide",
+          "01-website-architecture/02-taxonomy-and-classification-guide",
+          "01-website-architecture/03-publishing-boundaries"
+        ]
+      },
+      {
+        "group": "Voice and Editorial Standards",
+        "pages": [
+          "02-voice-and-editorial-standards/01-voice-and-style-guide",
+          "02-voice-and-editorial-standards/02-ethical-ngo-storytelling-standard"
+        ]
+      },
+      {
+        "group": "Content Templates",
+        "pages": [
+          "03-content-templates/01-project-template",
+          "03-content-templates/02-blog-and-update-template",
+          "03-content-templates/03-notice-template",
+          "03-content-templates/04-press-template",
+          "03-content-templates/05-report-template",
+          "03-content-templates/06-quote-template"
+        ]
+      },
+      {
+        "group": "Focus Areas",
+        "pages": [
+          "04-focus-areas/00-focus-areas-overview",
+          "04-focus-areas/climate-and-disaster-response",
+          "04-focus-areas/education-and-digital-learning",
+          "04-focus-areas/healthcare",
+          "04-focus-areas/human-rights-and-advocacy",
+          "04-focus-areas/skill-development-employment",
+          "04-focus-areas/youth-and-women-empowerment"
+        ]
+      },
+      {
+        "group": "Approved Organization Facts",
+        "pages": [
+          "05-approved-organization-facts/01-entity-separation-rules",
+          "05-approved-organization-facts/songjog-bangladesh-approved-facts",
+          "05-approved-organization-facts/songjog-foundation-usa-approved-facts"
+        ]
+      },
+      {
+        "group": "Projects",
+        "pages": [
+          "06-projects/00-project-knowledge-record-template"
+        ]
+      },
+      {
+        "group": "Approved Content Examples",
+        "pages": [
+          "07-approved-content-examples/00-example-governance"
+        ]
+      },
+      {
+        "group": "SEO and Marketing",
+        "pages": [
+          "08-seo-and-marketing/01-seo-and-marketing-standard"
+        ]
+      },
+      {
+        "group": "Ethics Privacy and Consent",
+        "pages": [
+          "09-ethics-privacy-and-consent/01-consent-privacy-and-media-checklist"
+        ]
+      },
+      {
+        "group": "Agent Operations",
+        "pages": [
+          "10-agent-operations/01-agent-master-instructions",
+          "10-agent-operations/02-follow-up-question-protocol",
+          "10-agent-operations/03-fact-claim-and-qa-workflow",
+          "10-agent-operations/04-starter-prompts-and-test-cases"
+        ]
+      },
+      {
+        "group": "Structured Handoff and MCP",
+        "pages": [
+          "11-structured-handoff-and-mcp/01-structured-handoff-specification",
+          "11-structured-handoff-and-mcp/02-mcp-tool-and-approval-requirements"
+        ]
+      },
+      {
+        "group": "Source Materials",
+        "pages": [
+          "source-materials/website-content-architecture-source"
+        ]
+      }
+    ]
+  },
+  "footer": {
+    "socials": {}
+  },
+  "seo": {
+    "metatags": {
+      "robots": "noindex, nofollow"
+    }
+  },
+  "search": {
+    "prompt": "Search Songjog website content guidance"
+  }
+}

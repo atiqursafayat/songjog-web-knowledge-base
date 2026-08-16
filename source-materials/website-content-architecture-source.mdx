@@ -1,0 +1,220 @@
+---
+title: "Website Content Architecture Source"
+description: "Original Songjog website architecture and authoring guide."
+---
+
+# Songjog Foundation USA — Website Content Architecture &amp; Authoring Guide
+
+How the v2.songjogfoundation.org content system is built, what content type goes where, and step-by-step how to add each kind of content — for the Songjog USA team. Reflects the site as of Aug 2026 (WordPress + Elementor, native widgets, Jeg Kit removed).
+
+## 1. How the system is built (read this first)
+
+The site runs on **WordPress + Elementor** (with the Elementor Pro widget set) on the `hello-elementor` child theme. The single most important thing to understand:
+
+> **You mostly don't build pages. You create *items*, and *templates* render them automatically.**
+
+There are three layers:
+
+1. **Content items** — the actual things you manage: Projects, Press, Notices, Blog posts, Members, Reports, Quotes, Pages, and the Donation product. Each lives in a *post type*.
+2. **Taxonomies** — the labels that classify items and drive where they appear: **Focus Areas**, Project Status, Homepage Feature, categories, etc.
+3. **Templates** (Elementor Theme Builder) — reusable layouts that render items: one **single template** per content type (e.g. every Project detail page uses the same *Elementor Project* template), plus the **Header**, **Footer**, **404**, **archive** and **loop-item** templates.
+
+So when you add a Project, you do **not** design a page. You fill in the Project's fields, tag it with a Focus Area and a Status, and: its detail page is drawn by the Project template, and it automatically appears in the Projects listing and (if tagged) on the homepage. Listing pages use an Elementor **Loop Grid** + a **Filter** widget that query the content types for you.
+
+**Environments:** `v2.songjogfoundation.org` is the staging/build site. The live site is published from it via **Hostinger hPanel → Publish**, which overwrites production wholesale. Build and review on v2; nothing is live until Publish.
+
+## 2. Content types at a glance
+
+| Content type | Use it for | Key taxonomies | Detail page rendered by | Where it shows up |
+|---|---|---|---|---|
+| **Project** | An initiative/programme Songjog runs | Focus Area, Project Status, Homepage Feature | *Elementor Project* single template | `/projects/` grid, homepage (if featured), Focus Area pages |
+| **Press** | External media coverage / news mentions | Focus Area, Press Category | *Single Post* template | `/press/` listing |
+| **Notice** | Official announcements (AGM, recruitment, tender, urgent) | Notice Category, Notice Status | *single-notice* template | `/notices/` listing |
+| **Post (Blog)** | Stories, field updates, articles | Category, Tags, Focus Area | *Single Post* template | `/blog/` listing, category archives |
+| **Member** | Team / board / committee people | Member Role, Member Type | *Member Details* template | About page team sections |
+| **Report** | Financial / annual / audit reports | Report Category | *reports-single-detail* template | Reports archive |
+| **Quote** | Testimonials / beneficiary quotes | Quote Status (Featured) | *(data source — not a public page)* | Homepage & story blocks, pulled dynamically |
+| **Page** | Standalone info pages (About, FAQs, Privacy, campaign landings) | — | The page's own Elementor content | Wherever you link them |
+| **Product (Donate)** | Donation options | Product Category, Select-Project attribute | *Donation Page* template | `/donate/`, checkout |
+
+**Focus Area is not a content type — it is a taxonomy** (see §3). It behaves like a mini-section: each Focus Area has its own detail page that lists the Projects and Press tagged to it.
+
+## 3. Taxonomies — the labels that drive the site
+
+Taxonomies are how items get organised and surfaced. The important ones:
+
+**Focus Area** *(the cross-cutting theme — shared by Projects, Press and Blog posts)*
+The six approved areas:
+- Education and Digital Learning
+- Skill Development & Employment
+- Healthcare
+- Climate and Disaster Response
+- Youth and Women Empowerment
+- Human Rights and Advocacy
+
+Tagging a Project/Press/Post with a Focus Area makes it appear on that Focus Area's detail page. Each Focus Area page also has its own descriptive content (intro, stats, etc.) — **that content is entered in wp-admin via ACF fields on the term** (see §6 and the gotcha in §8; it can't be edited through automation).
+
+**Project Status** *(Projects only):* Active / Ongoing · Completed · Upcoming. Drives filtering and labelling on `/projects/`.
+
+**Homepage Feature** *(Projects only):* the switch that puts a project on the homepage.
+- **Project Spotlight** → the single large featured project.
+- **Our Work Grid** → the projects shown in the homepage "our work" grid.
+To change what's on the homepage, you re-assign this taxonomy on the Projects — you do **not** edit the homepage layout.
+
+**Quote Status:** "Featured" marks which quotes appear in the rotating/dynamic quote blocks.
+
+**Others:** Press Category, Notice Category, Notice Status (Active/Urgent/Archived), Member Role & Member Type (Executive Committee / Strategic Advisory Committee), Report Category, plus standard Blog Category & Tags.
+
+## 4. "What goes where" — decision guide
+
+Use this when you're unsure which content type to create:
+
+| If the thing is… | Create a… | Then tag it with… |
+|---|---|---|
+| A programme/initiative Songjog runs (with its own story, goals, impact) | **Project** | Focus Area + Project Status (+ Homepage Feature if it should appear on the homepage) |
+| A newspaper/TV/online article **about** Songjog | **Press** | Focus Area + Press Category |
+| An official announcement, vacancy, tender, meeting, or urgent alert | **Notice** | Notice Category + Notice Status |
+| A story, field update, or opinion/awareness article **by** Songjog | **Post (Blog)** | Category + Focus Area (+ Tags) |
+| A person on the team, board, or an advisory committee | **Member** | Member Role + Member Type |
+| An annual report, audited financials, or a downloadable publication | **Report** | Report Category |
+| A short testimonial or beneficiary quote to feature | **Quote** | Quote Status = Featured |
+| A thematic area of work | *(don't create a post)* assign the **Focus Area** term and fill its ACF content | — |
+| A one-off informational page (About, Privacy, Terms, FAQs, a campaign landing page) | **Page** | — |
+| A new way for people to give | **Donation product / variation** | *(governance-gated — see §9)* |
+
+**Rule of thumb:** if it belongs to a *set of similar things that should list and filter together* (projects, press, notices, people, reports), it's a **content type**, not a hand-built Page. Only make a Page when it's genuinely one-of-a-kind.
+
+## 5. How pages are assembled (templates & loops)
+
+**Chrome (every page):** the **Header** and **Footer** are Theme Builder templates applied by display conditions, plus a dedicated **404** template. You never rebuild these per page — edit the template once and it updates everywhere. *(Known issue to fix before launch: the header conditions currently skip `/donate/` and `/checkout/`, and the 404 template has no header/footer — see the launch checklist.)*
+
+**Single (detail) pages:** each content type has one single template that renders every item of that type:
+- Projects → *Elementor Project*
+- Blog posts & Press → *Single Post*
+- Members → *Member Details*
+- Reports → *reports-single-detail*
+- Notices → *single-notice*
+Edit that template and **every** item of that type changes. Individual items only supply their title, content and fields.
+
+**Listing pages** (`/projects/`, `/press/`, `/notices/`, `/blog/`) are built with an Elementor **Loop Grid** (repeats a small *loop-item* card template for each item) plus a **Filter** widget (the category/status tabs). The card design lives in loop-item templates like *Project Card Loop*, *Press Card Loop*, *Member Card Loop*. Change the card once → every card in that grid updates.
+
+**Focus Area detail pages** are taxonomy-term pages: one *Focus Area Detail* archive template renders all six, pulling the term's ACF content (intro, stats) and a loop of the Projects/Press tagged with that term. See the pinned *Focus Area Detail Page — Standard UI Specification* for the exact section order.
+
+**Homepage** is composed from taxonomy queries: the *Project Spotlight* and *Our Work Grid* loops read the Homepage Feature terms, and the quote block reads Featured Quotes. Update the homepage's *content* by re-tagging Projects/Quotes, not by editing the homepage.
+
+## 6. How to add each type of content (step by step)
+
+**Add a Project**
+1. Projects → Add New. Title = project name.
+2. Fill the content/fields (summary, body, images — see §7 for image/alt rules).
+3. Set the **Featured image** (used by the card and detail hero).
+4. Assign **Focus Area** (one or more), **Project Status**, and **Homepage Feature** only if it should appear on the homepage.
+5. Publish. It now appears on `/projects/`, on its Focus Area page(s), and its detail page renders via the Project template automatically.
+
+**Add Press**
+Press → Add New → title, excerpt/summary, source link, Featured image → assign Focus Area + Press Category → Publish. Appears on `/press/`.
+
+**Add a Notice**
+Notices → Add New → title + body → assign Notice Category + Notice Status (use *Urgent* for alerts) → Publish. Appears on `/notices/`. Keep emergency details (hotlines, dates) real and verified.
+
+**Add a Blog post / story**
+Posts → Add New → title, body, Featured image → Category + Focus Area (+ Tags) → Publish. Appears on `/blog/`.
+
+**Add a Member**
+Members → Add New → name as title, photo as Featured image, bio/role fields → assign Member Role + Member Type (Executive Committee or Strategic Advisory Committee) → Publish. Appears in the matching About-page section.
+
+**Add a Report**
+Reports → Add New → title, upload the file/link, cover image → Report Category → Publish.
+
+**Add a Quote**
+Quotes → Add New → the quote text and attribution fields → set Quote Status = Featured to surface it. Quotes are a **data source**; they render inside homepage/story blocks, not as their own page.
+
+**Add / edit Focus Area content**
+Projects (and Posts/Press) → the **Focus Areas** taxonomy → open a term → fill its ACF fields (intro, description, stats). **This must be done in wp-admin** — term content can't be edited via automation. Use the pinned *Focus Area Content Packs* docs for approved copy.
+
+**Add a standalone Page**
+Pages → Add New → edit with Elementor. Use **modern flexbox containers** for new pages (not legacy sections). Follow §7 standards. New/important pages stay **Draft** until reviewed (§9).
+
+**Add a donation option** — governance-gated; see §9. Do not change payment configuration casually.
+
+## 7. Authoring standards (voice, headings, colour, media)
+
+**Voice & vocabulary**
+- Use **"focus areas"** and **"projects"** only. Never "programme", "pillar", or "front" — these were removed site-wide.
+- Section headings use a consistent **two-noun** style (as on the homepage), not verb-led sentences.
+- Banned phrasing: "click here", contextless "learn more/read more", "the needy", savior/pity framing, guilt or false urgency, unsupported superlatives ("transforming lives"). Never fabricate quotes, beneficiaries, statistics, partners, dates, or outcomes.
+
+**Headings & structure**
+- Exactly **one H1 per page** (the page/detail title). Use H2 → H3 → H4 in order; don't skip levels.
+- Don't use **H5** for styling — in this kit H5 is a decorative handwriting style, not a heading level.
+
+**Colour (brand + accessibility)**
+- Navy `#10172E` (headings), Body `#525766`, Cream/soft-bg `#FFFBF3`, White.
+- **Green:** use `#006B49` for green *text on light backgrounds* (it passes contrast). The brand green `#00AE75` is for **accents/icons or text on navy only** — it fails contrast as small text on white/cream.
+- **Gold `#FFC500`:** accents, and text **only on navy** — never gold text on white, never a large gold background wall.
+
+**Buttons**
+- Always set an explicit button font (Raleway 600, ~16–17px). If you don't, buttons inherit the kit's *Caveat* handwriting font, which is wrong for CTAs. Use size *md* or larger for primary CTAs. Primary CTA = gold; secondary CTAs visually subordinate.
+
+**Images & media**
+- Every meaningful image needs **alt text**. In Elementor, set it on the image widget **and** on the Media Library item — an empty alt on the widget overrides the library.
+- Use **real, authorised** Songjog photos. Do not generate images for Songjog.
+- Keep hero/logo images out of lazy-loading (see §8).
+
+**Links**
+- Descriptive link text ("See our projects", not "click here"). External links open in a new tab with `rel="noopener"`.
+
+**SEO (Rank Math)**
+- Set a **meta description** (~150 chars) and a concise SEO **title** (≤ ~60 chars) on every page/item.
+- FAQ content should use the Accordion widget's **FAQ schema** toggle. Make sure Projects and Focus Areas are included in the sitemap.
+
+## 8. Build rules & gotchas (important)
+
+These are hard-won lessons specific to this site:
+
+- **Use native Elementor widgets only.** Jeg Kit has been removed for security. Build FAQs with the native **Accordion** widget, feature cards with the native **Icon Box**, etc. Don't reintroduce Jeg Kit (`jkit_*`) widgets.
+- **Legacy vs modern layout:** older pages are built with legacy *section → column → widget*. When editing them, **preserve that structure** — don't convert a legacy page to containers just to change text or an image. New pages/sections use flexbox containers. Never nest a modern container inside a legacy column, and never drop an Elementor v4 atomic element into a legacy section (it breaks the editor).
+- **Focus Area (term) content is wp-admin only.** ACF fields attached to taxonomy terms cannot be written by automation — enter that copy by hand in wp-admin.
+- **LiteSpeed lazy-loads every image**, including the logo and hero (makes them appear late). Exclude above-the-fold images via LiteSpeed → Media → *Lazy Load Image Excludes/Class Excludes*, or enable *Viewport Images (VPI)*.
+- **Always purge cache after changes.** LiteSpeed page cache **and** the object cache — after any edit, purge (LiteSpeed → Toolbox → Purge All) before trusting what you see, or you'll review stale output.
+- **Don't leave the Elementor editor open on a page someone else is editing.** Saving from an open editor writes back the whole page from the state it loaded and can silently overwrite other changes.
+- **Email senders:** forms and receipts should send from a real `@songjogfoundation.org` address (e.g. `info@songjogfoundation.org`) — never a staging `@v2…` address or a personal Gmail.
+- **Staging is blocked from search engines** (and should stay that way). The correct `robots.txt` and indexing settings belong on production only.
+
+## 9. Governance — drafts, review & what needs approval
+
+**Draft first, publish after review.** New pages and major rewrites stay **Draft** until someone reviews them. Content is only truly live after the hPanel **Publish** pushes staging to production.
+
+**Claims that must be sourced and human-approved before going live:**
+- Legal/registration status, tax-deductibility, EIN, and the 501(c)(3) language.
+- Financial figures and "how your donation is used" claims — link to the published **audited report** rather than inventing percentages.
+- Beneficiary details, names, quotes, photos — require consent and approved attribution; never infer a person's story from a photo.
+- Emergency/relief claims (active operations, hotlines) — verify every detail; a non-working hotline on an urgent notice is a serious error.
+- Partnerships, statistics, dates, outcomes. Never mix figures from different reporting periods, and keep USA-entity vs Bangladesh-entity facts clearly separated.
+
+**Changes that need explicit approval (not routine authoring):**
+- Publishing, changing navigation menus, or theme-builder/template display conditions.
+- Donation/payment configuration, forms' recipients or routing.
+- Global styles (kit colours/typography), plugins/themes, users/roles, custom code.
+- Anything on **production** — production is replaced wholesale at Publish, so a verified **backup + rollback** must exist before launch.
+
+**Two entities, kept separate:** this is the **Songjog USA** (501(c)(3)) site. Do not carry Bangladesh-entity contacts, registrations, or `songjog.org` addresses onto USA pages without an approved source.
+
+## 10. Quick reference — key pages & templates
+
+Handy IDs on the staging site (for editors comfortable in wp-admin):
+
+**Core pages:** Home `55` · About `248` · Projects `264` · Works `266` · Press `268` · Contact `270` · Blog `315` · Focus Areas `2783` · Notices `3835` · Volunteer `3099` · Partner `4239` · FAQs `511` · Donate (product) `366` · Checkout `363` · Privacy `376` · Terms `373`.
+
+**Theme Builder templates:** Header `58` · Header Inner `260` · Footer `62` · Error 404 `466` · Single Post (post+press) `544` · Elementor Project `2637` · Member Details `1156` · single-notice `4132` · reports-single-detail `3002` · Focus Area Detail (archive) `2932` · Post Archive `541` · reports-archive `3008` · Donation Page `379`.
+
+**Loop-item (card) templates:** Project Card Loop `601` · Press Card Loop `343` · Member Card Loop `647` · focus-area-loop `2797` · Report card loop `2989` · homepage cards (Spotlight / Quote / Our-Work).
+
+**Related pinned docs:**
+- *Focus Area Detail Page — Standard UI Specification* (section order & rendering)
+- *Focus Area Content Packs* & *Skill Development Draft Content* (approved copy for the focus-area terms)
+- *Songjog USA Donation System — Audit, Findings & Improvement Roadmap*
+- *Songjog Dynamic Quotes — Architecture & Placement Proposal*
+- *Pre-Launch Audit: v2 Staging vs Production* (launch checklist & open fixes)
+
+*Note: template/page IDs are on staging; they carry to production at Publish. Always confirm an ID in wp-admin before a structural edit, since template libraries change over time.*

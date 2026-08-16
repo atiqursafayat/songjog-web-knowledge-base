@@ -1,0 +1,110 @@
+---
+title: "MCP Tool and Approval Requirements"
+description: "Narrow permissions, validation, and safe WordPress draft creation"
+---
+
+> Narrow permissions, validation, and safe WordPress draft creation
+
+<Note>
+**Document control**
+
+- **Document status:** DRAFT - REVIEW REQUIRED
+- **Knowledge use:** AUTHORITATIVE AFTER APPROVAL
+- **Responsible entity:** Songjog Foundation USA website
+- **Content owner:** Communications and Web Team
+- **Effective date:** 2026-08-16
+- **Review date:** 2027-02-16
+- **Version:** 1.0
+</Note>
+
+## Read tools
+
+- get_content_types
+
+- get_taxonomies
+
+- get_taxonomy_terms
+
+- get_post_schema
+
+- find_existing_projects
+
+- find_related_content
+
+- get_existing_content
+
+- check_slug_availability
+
+- get_media_metadata
+
+## Draft tools
+
+- create_draft_post
+
+- create_draft_project
+
+- create_draft_notice
+
+- create_draft_press_item
+
+- create_draft_report
+
+- create_draft_quote
+
+- update_draft_content
+
+- attach_existing_media
+
+- set_rank_math_metadata
+
+- link_related_content
+
+## Validation tools
+
+- validate_content_payload
+
+- validate_taxonomy_terms
+
+- validate_internal_links
+
+- check_duplicate_content
+
+- preview_draft
+
+- get_draft_render
+
+## Restricted tools
+
+- publish_content
+
+- update_published_content
+
+- delete_content
+
+- change_homepage_feature
+
+- change_navigation
+
+- update_elementor_template
+
+- change_global_styles
+
+- modify_donation_product
+
+- modify_form_routing
+
+- push_staging_to_production
+
+## Audit requirements
+
+- Record request and payload IDs.
+
+- Record initiating user and approver.
+
+- Store tool response and created WordPress ID.
+
+- Do not retry non-idempotent writes blindly.
+
+- Generate preview before approval.
+
+- Keep production deployment separate.
